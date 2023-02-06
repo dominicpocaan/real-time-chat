@@ -5,6 +5,7 @@
   color: #ffffff;
 
   .user {
+    height: 2.5em;
     padding: 0.5em 0.5em 0em 0.5em;
     display: flex;
     align-items: center;
@@ -20,5 +21,24 @@
     .name {
       margin-left: 0.5em;
     }
+  }
+
+  .transcript {
+    width: calc(100% - 4em);
+    height: calc(100vh - 12.5em);
+    padding: 2em;
+    overflow-y: auto;
+  }
+
+  .transcript::-webkit-scrollbar {
+    width: 0.25rem;
+  }
+
+  .transcript::-webkit-scrollbar-track {
+    background: #686868;
+  }
+
+  .transcript::-webkit-scrollbar-thumb {
+    background: #313131;
   }
 }

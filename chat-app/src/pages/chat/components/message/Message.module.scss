@@ -1,0 +1,11 @@
+.root {
+  display: flex;
+
+  justify-content: right;
+
+  .message {
+    padding: 0.5em;
+    margin-top: 0.2em;
+    display: inline-block;
+  }
+}

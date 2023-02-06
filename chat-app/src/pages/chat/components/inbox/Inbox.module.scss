@@ -1,19 +1,33 @@
 .root {
   width: 20em;
-  height: 90vh;
-  max-height: 90vh;
-  background-color: #2d2a2e;
-  overflow-y: auto;
+  height: 100vh;
+  padding: 1em;
+  position: fixed;
+  background-color: #221f22;
+  color: #ffffff;
+
+  .title {
+    font-size: 1.5em;
+    font-weight: 500;
+  }
+
+  .inbox {
+    width: 20em;
+    height: 90vh;
+    max-height: 90vh;
+    background-color: #2d2a2e;
+    overflow-y: auto;
+  }
 }
 
-.root::-webkit-scrollbar {
+.inbox::-webkit-scrollbar {
   width: 0.25rem;
 }
 
-.root::-webkit-scrollbar-track {
+.inbox::-webkit-scrollbar-track {
   background: #686868;
 }
 
-.root::-webkit-scrollbar-thumb {
+.inbox::-webkit-scrollbar-thumb {
   background: #313131;
 }
