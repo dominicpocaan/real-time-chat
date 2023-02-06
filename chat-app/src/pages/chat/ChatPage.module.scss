@@ -1,0 +1,30 @@
+.root {
+  .inbox {
+    width: 20em;
+    height: 100vh;
+    padding: 1em;
+    position: fixed;
+    background-color: #221f22;
+    color: #ffffff;
+
+    .title {
+      font-size: 1.5em;
+      font-weight: 500;
+    }
+  }
+
+  .input {
+    right: 0;
+    bottom: 0;
+    width: calc(100% - 24em);
+    padding: 1em 1em 2em 1em;
+    height: 20px;
+    position: fixed;
+    background-color: #221f22;
+
+    input {
+      width: 90%;
+      height: 30px;
+    }
+  }
+}

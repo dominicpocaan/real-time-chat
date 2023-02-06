@@ -1,0 +1,19 @@
+.root {
+  width: 20em;
+  height: 90vh;
+  max-height: 90vh;
+  background-color: #2d2a2e;
+  overflow-y: auto;
+}
+
+.root::-webkit-scrollbar {
+  width: 0.25rem;
+}
+
+.root::-webkit-scrollbar-track {
+  background: #686868;
+}
+
+.root::-webkit-scrollbar-thumb {
+  background: #313131;
+}

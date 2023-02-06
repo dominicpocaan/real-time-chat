@@ -1,0 +1,24 @@
+.root {
+  min-height: 100vh;
+  margin-left: 22em;
+  background-color: #2d2a2e;
+  color: #ffffff;
+
+  .user {
+    padding: 0.5em 0.5em 0em 0.5em;
+    display: flex;
+    align-items: center;
+
+    .avatar {
+      width: 2.5em;
+      height: 2.5em;
+      display: inline-block;
+      border-radius: 50%;
+      background-color: #221f22;
+    }
+
+    .name {
+      margin-left: 0.5em;
+    }
+  }
+}
