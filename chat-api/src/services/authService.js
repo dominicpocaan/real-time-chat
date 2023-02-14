@@ -38,16 +38,16 @@ const login = async (data) => {
 
   const user = await UserModel.findUserByEmail(email);
 
-  const incorrectError = new BadRequest({
+  const emailOrPasswordError = new BadRequest({
     description: 'Incorrect email or password.',
     errorCode: 'ERRAUTH002',
   });
 
-  if (user === null) throw incorrectError;
+  if (user === null) throw emailOrPasswordError;
 
   const isPasswordMatched = await bcryptjs.compare(password, user.password);
 
-  if (isPasswordMatched === false) throw incorrectError;
+  if (isPasswordMatched === false) throw emailOrPasswordError;
 
   return user;
 };

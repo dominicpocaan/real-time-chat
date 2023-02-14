@@ -1,0 +1,40 @@
+.root {
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  justify-content: left;
+
+  label {
+    margin-top: 1em;
+    font-size: 0.7em;
+    font-weight: 600;
+    line-height: 120%;
+    letter-spacing: 0.1em;
+  }
+
+  input {
+    margin-top: 0.2em;
+  }
+
+  input[type='text'],
+  input[type='password'],
+  input[type='number'],
+  input[type='date'] {
+    padding: 0.8em 1em;
+    font-weight: 500;
+    font-size: 0.8em;
+    line-height: 140%;
+    border: 1px solid;
+    border-radius: 3px;
+    color: #000000;
+  }
+
+  input[type='text']:disabled,
+  input[type='password']:disabled,
+  input[type='number']:disabled,
+  input[type='date']:disabled {
+    color: #b2b7c2;
+    background-color: #e2e4e8;
+  }
+}

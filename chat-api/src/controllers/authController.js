@@ -1,4 +1,5 @@
 const authService = require('../services/authService');
+const Unauthorized = require('../utils/exceptions/unauthorized');
 
 const register = async (req, res) => {
   const { email, password } = req.body;
@@ -20,4 +21,15 @@ const login = async (req, res) => {
   res.success();
 };
 
-module.exports = { register, login };
+const status = async (req, res) => {
+  if (req.session.user) {
+    res.success();
+  } else {
+    throw new Unauthorized({
+      description: 'Unauthorized access.',
+      errorCode: 'ERRAUTH003',
+    });
+  }
+};
+
+module.exports = { register, login, status };

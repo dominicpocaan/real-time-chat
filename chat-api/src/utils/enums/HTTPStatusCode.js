@@ -4,4 +4,5 @@ module.exports = {
   ALREADY_EXISTS: 403,
   NOT_FOUND: 404,
   INTERNAL_SERVER: 500,
+  UNAUTHORIZED: 401,
 };

@@ -7,5 +7,6 @@ const { errorHandlerWrapper } = require('../middlewares/errorHandler');
 
 router.post('/register', errorHandlerWrapper(authController.register));
 router.post('/login', errorHandlerWrapper(authController.login));
+router.get('/status', errorHandlerWrapper(authController.status));
 
 module.exports = router;
