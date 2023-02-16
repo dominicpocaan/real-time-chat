@@ -1,5 +1,5 @@
 const authService = require('../services/authService');
-const Unauthorized = require('../utils/exceptions/unauthorized');
+const Unauthorized = require('../utils/exceptions/Unauthorized');
 
 const register = async (req, res) => {
   const { email, password } = req.body;
