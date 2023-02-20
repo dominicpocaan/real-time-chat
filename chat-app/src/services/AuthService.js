@@ -1,18 +1,25 @@
 import axiosInstance from './axiosInstance';
 
-export const login = async (data) => {
-  return await axiosInstance.post('/auth/login', JSON.stringify(data), {
+const register = async (data) => {
+  return axiosInstance.post('/auth/register', JSON.stringify(data), {
     withCredentials: true,
   });
 };
 
-export const status = async () => {
-  return await axiosInstance.get('/auth/status', {
+const login = async (data) => {
+  return axiosInstance.post('/auth/login', JSON.stringify(data), {
+    withCredentials: true,
+  });
+};
+
+const status = async () => {
+  return axiosInstance.get('/auth/status', {
     withCredentials: true,
   });
 };
 
 export default {
+  register,
   login,
   status,
 };

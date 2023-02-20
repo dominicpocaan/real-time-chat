@@ -5,7 +5,7 @@ export const AuthStateContext = createContext();
 export const AuthDispatchContext = createContext();
 
 export const AuthProvider = (props) => {
-  // const [user, setUser] = useState(null);
+  const [user, setUser] = useState({});
   const [authenticating, setAuthenticating] = useState(true);
   const [authenticated, setAuthenticated] = useState(false);
 
@@ -13,6 +13,11 @@ export const AuthProvider = (props) => {
     AuthService.status()
       .then((result) => {
         if (result.data.status === 200) {
+          setUser({
+            id: result.data.data._id,
+            email: result.data.data.email,
+          });
+
           setAuthenticated(true);
           setAuthenticating(false);
         }
@@ -22,6 +27,18 @@ export const AuthProvider = (props) => {
         setAuthenticating(false);
       });
   }, []);
+
+  const register = async (data) => {
+    const { email, password } = data;
+
+    const result = await AuthService.register({ email, password });
+
+    if (result.data.status === 200) {
+      setAuthenticated(true);
+    }
+
+    return result;
+  };
 
   const login = async (data) => {
     const { email, password } = data;
@@ -37,8 +54,8 @@ export const AuthProvider = (props) => {
 
   const logout = async () => {};
 
-  const state = { authenticating, authenticated };
-  const dispatch = { login, logout };
+  const state = { user, authenticating, authenticated };
+  const dispatch = { register, login, logout };
 
   return (
     <AuthStateContext.Provider value={state}>

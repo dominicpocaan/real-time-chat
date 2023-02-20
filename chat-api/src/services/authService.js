@@ -7,7 +7,7 @@ const register = async (data) => {
   const { email, password } = data;
 
   try {
-    const user = await UserModel.createNewUser({
+    const user = await UserModel.insert({
       email,
       password: await bcryptjs.hash(password, 10),
       createdAt: new Date().toLocaleString('en-US', { timeZone: 'UTC' }),
@@ -36,7 +36,7 @@ const register = async (data) => {
 const login = async (data) => {
   const { email, password } = data;
 
-  const user = await UserModel.findUserByEmail(email);
+  const user = await UserModel.getByEmail(email);
 
   const emailOrPasswordError = new BadRequest({
     description: 'Incorrect email or password.',

@@ -23,7 +23,12 @@ const LoginPage = () => {
           label="ENTER PASSWORD"
           onChange={(value) => setPassword(value)}
         />
-        <button disabled={validating} onClick={handleLogin}>
+        <button
+          disabled={validating}
+          onClick={() => {
+            handleLogin();
+          }}
+        >
           Login
         </button>
         <a href="/register">Register</a>

@@ -1,4 +1,6 @@
+const UserModel = require('../models/user');
 const authService = require('../services/authService');
+const BadRequest = require('../utils/exceptions/BadRequest');
 const Unauthorized = require('../utils/exceptions/Unauthorized');
 
 const register = async (req, res) => {
@@ -23,7 +25,15 @@ const login = async (req, res) => {
 
 const status = async (req, res) => {
   if (req.session.user) {
-    res.success();
+    const user = await UserModel.getById(req.session.user.id);
+
+    if (user === null)
+      throw new BadRequest({
+        description: 'User does not exist.',
+        errorCode: 'ERRAUTH004',
+      });
+
+    res.success(user);
   } else {
     throw new Unauthorized({
       description: 'Unauthorized access.',

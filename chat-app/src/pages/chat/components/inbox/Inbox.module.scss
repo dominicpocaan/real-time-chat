@@ -11,12 +11,53 @@
     font-weight: 500;
   }
 
+  .search {
+    input {
+      width: calc(100% - 2.2em);
+      padding: 0.8em 1em;
+      margin-bottom: 0.5em;
+      font-weight: 500;
+      font-size: 0.8em;
+      line-height: 140%;
+      border: 1px solid;
+      border-radius: 3px;
+      color: #000000;
+    }
+  }
+
   .inbox {
     width: 20em;
-    height: 90vh;
+    height: calc(100vh - 11em);
     max-height: 90vh;
     background-color: #2d2a2e;
     overflow-y: auto;
+
+    .search {
+      text-align: center;
+
+      .search-result {
+        text-align: left;
+        padding: 0.8em 1em;
+        cursor: pointer;
+      }
+
+      .search-result:hover {
+        background-color: #3b393b;
+      }
+    }
+
+    .inbox-item {
+      padding: 0.8em 1em;
+      cursor: pointer;
+
+      .recent-message {
+        font-size: 10px;
+      }
+    }
+
+    .inbox-item:hover {
+      background-color: #3b393b;
+    }
   }
 }
 

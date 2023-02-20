@@ -5,9 +5,14 @@ import Inbox from './components/inbox/Inbox';
 import Messages from './components/messages/Messages';
 
 const ChatPage = () => {
+  // const { connect } = useSocket();
   const { sendMessage } = useChatDispatch();
 
   const [message, setMessage] = useState('');
+
+  // useEffect(() => {
+  //   connect();
+  // }, []);
 
   return (
     <div className={styles.root}>

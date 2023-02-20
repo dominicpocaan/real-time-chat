@@ -24,25 +24,25 @@ const mongoConnection = (() => {
     const initCollections = async () => {
       const models = fs.readdirSync(`${process.cwd()}/src/models`);
 
-      // for (const model of models) {
-      //   const schema = require(`${process.cwd()}/src/models/${model}`);
+      for (const model of models) {
+        const schema = require(`${process.cwd()}/src/models/${model}`);
 
-      //   try {
-      //     await mongoose.connection.createCollection(schema.collection.name);
-      //   } catch (error) {
-      //     // If collection already exists, continue to other models.
-      //     if (
-      //       error.name &&
-      //       error.name === 'MongoServerError' &&
-      //       error.codeName &&
-      //       error.codeName === 'NamespaceExists'
-      //     ) {
-      //       continue;
-      //     }
+        try {
+          await mongoose.connection.createCollection(schema.collection.name);
+        } catch (error) {
+          // If collection already exists, continue to other models.
+          if (
+            error.name &&
+            error.name === 'MongoServerError' &&
+            error.codeName &&
+            error.codeName === 'NamespaceExists'
+          ) {
+            continue;
+          }
 
-      //     throw error;
-      //   }
-      // }
+          throw error;
+        }
+      }
     };
 
     mongoose.connection.on('connected', () => {

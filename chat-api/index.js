@@ -1,3 +1,5 @@
+'use strict';
+
 require('dotenv').config();
 const cors = require('cors');
 const express = require('express');
@@ -12,6 +14,7 @@ const mongoConnection = require('./src/configs/mongoConnection');
 const PORT = process.env.PORT ?? 3001;
 
 const authRoutes = require('./src/routes/authRoutes');
+const userRoutes = require('./src/routes/userRoutes');
 const { errorHandler } = require('./src/middlewares/errorHandler');
 
 const app = express();
@@ -48,6 +51,7 @@ app.use(extendedResponse);
 
 // Routes
 app.use('/api/auth', authRoutes);
+app.use('/api/users', userRoutes);
 
 app.use(errorHandler);
 

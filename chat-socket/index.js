@@ -8,7 +8,7 @@ const { Server } = require('socket.io');
 const MongoStore = require('connect-mongo');
 
 const mongoConnection = require('./src/configs/mongoConnection');
-const inboxHandler = require('./src/handlers/inboxHandler');
+const conversationHandler = require('./src/handlers/conversationHandler');
 const messageHandler = require('./src/handlers/messageHandler');
 
 const PORT = process.env.PORT ?? 3002;
@@ -22,6 +22,7 @@ const httpServer = createServer(app);
 const io = new Server(httpServer, {
   cors: {
     origin: ['http://localhost:3000'],
+    credentials: true,
   },
 });
 
@@ -44,10 +45,22 @@ io.engine.use(
   })
 );
 
-io.on('connection', (socket) => {
+io.use((socket, next) => {
   console.log('[server] new socket connection: ', socket.id);
 
-  inboxHandler(io, socket);
+  const session = socket.request.session;
+
+  if (session.user) {
+    socket.user = session.user.id;
+    next();
+  } else {
+    console.log('[server] unauthorized access: ', socket.id);
+    next(new Error('Unauthorized access.'));
+  }
+});
+
+io.on('connection', (socket) => {
+  conversationHandler(io, socket);
 
   messageHandler(io, socket);
 });
