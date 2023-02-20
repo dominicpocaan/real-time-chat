@@ -5,6 +5,8 @@ const useSocket = ({
   handleConversation,
   handleConversations,
   handleConversationsUpdate,
+  handleMessages,
+  handleMessagesUpdate,
 }) => {
   const [socket, setSocket] = useState(null);
   const [connected, setConnected] = useState(false);
@@ -34,6 +36,10 @@ const useSocket = ({
       socket.on('conversation:list:update', (data) => {
         handleConversationsUpdate(data);
       });
+
+      socket.on('message:new', (data) => {
+        handleMessagesUpdate(data);
+      });
     }
 
     return () => {
@@ -52,8 +58,9 @@ const useSocket = ({
   };
 
   const startConversation = (id, email) => {
-    socket.emit('conversation:start', { id }, (res) => {
-      handleConversation(res);
+    socket.emit('conversation:start', { id }, (conversation, messages) => {
+      handleConversation(conversation);
+      handleMessages(messages);
     });
   };
 

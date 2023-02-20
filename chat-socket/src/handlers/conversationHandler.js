@@ -1,15 +1,15 @@
 const userService = require('../integrations/userService');
 const ConversationModel = require('../models/conversation');
+const MessageModel = require('../models/message');
 
 const conversationHandler = (io, socket) => {
   const start = async (data, res) => {
     const other = data.id;
     const current = socket.user;
 
-    if (socket.lastRoom) {
-      console.log(socket.lastRoom);
-      socket.leave(socket.lastRoom);
-      socket.lastRoom = null;
+    if (socket.currentRoom) {
+      socket.leave(socket.currentRoom);
+      socket.currentRoom = null;
     }
 
     const existingConversation = await ConversationModel.getByUsers([
@@ -18,10 +18,14 @@ const conversationHandler = (io, socket) => {
     ]);
 
     if (existingConversation !== null) {
-      socket.join(existingConversation._id.toString());
-      socket.lastRoom = existingConversation._id.toString();
+      const currentRoom = existingConversation._id.toString();
 
-      res(existingConversation);
+      socket.join(currentRoom);
+      socket.currentRoom = currentRoom;
+
+      const messages = await MessageModel.getByConversationId(currentRoom);
+
+      res(existingConversation, messages);
     } else {
       const [otherUser, currentUser] = await Promise.all([
         userService.get(other),
@@ -39,7 +43,7 @@ const conversationHandler = (io, socket) => {
       });
 
       socket.join(conversation._id.toString());
-      socket.lastRoom = conversation._id.toString();
+      socket.currentRoom = conversation._id.toString();
 
       io.to(other).emit('conversation:list:update', conversation);
       io.to(current).emit('conversation:list:update', conversation);

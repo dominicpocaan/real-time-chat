@@ -82,9 +82,9 @@ const Inbox = () => {
           </div>
         ) : (
           conversations.map((value, index) => {
-            const anotherUser = value.usersDetails.filter(
-              (userDetail) => userDetail.id !== user.id
-            )[0];
+            const anotherUser = value.usersDetails.filter((userDetail) => {
+              return userDetail.id !== user.id;
+            })[0];
 
             return (
               <div
@@ -97,7 +97,9 @@ const Inbox = () => {
                 <div>{anotherUser.email}</div>
                 <div className={styles['recent-message']}>
                   {value.recentMessage
-                    ? value.recentMessage.value ?? ''
+                    ? `${
+                        value.recentMessage.sentBy === user.id ? 'You: ' : ''
+                      }${value.recentMessage.value}` ?? ''
                     : 'No messages yet . . .'}
                 </div>
               </div>

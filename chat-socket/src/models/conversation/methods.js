@@ -18,6 +18,16 @@ class ConversationMethods {
 
     return result;
   }
+
+  static async getByIdAndUpdate(data) {
+    const { id, update } = data;
+
+    const result = this.findByIdAndUpdate(id, update, {
+      new: true,
+    });
+
+    return result;
+  }
 }
 
 module.exports = ConversationMethods;

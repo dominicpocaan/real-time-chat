@@ -6,7 +6,7 @@ export const ChatStateContext = createContext();
 export const ChatDispatchContext = createContext();
 
 export const ChatProvider = (props) => {
-  const { authenticated } = useAuthState();
+  const { user, authenticated } = useAuthState();
 
   const [conversations, setConversations] = useState([]);
 
@@ -18,16 +18,30 @@ export const ChatProvider = (props) => {
   };
 
   const handleConversations = (data) => {
-    setConversations((conversations) => {
-      if (conversations.length === 0) return [...conversations, ...data];
+    setConversations((currConversations) => {
+      if (currConversations.length === 0)
+        return [...currConversations, ...data];
 
-      return conversations;
+      return currConversations;
     });
   };
 
   const handleConversationsUpdate = (data) => {
-    setConversations((conversations) => {
-      const updated = [...conversations, data];
+    setConversations((currConversations) => {
+      const indexOfUpdate = currConversations.findIndex(
+        (conversation) => conversation._id === data._id
+      );
+
+      let updated = [];
+
+      if (indexOfUpdate >= 0) {
+        currConversations[indexOfUpdate].recentMessage = data.recentMessage;
+        currConversations[indexOfUpdate].updatedAt = data.updatedAt;
+
+        updated = [...currConversations];
+      } else {
+        updated = [...currConversations, data];
+      }
 
       return updated.sort((a, b) => {
         return a.updatedAt > b.updatedAt
@@ -39,10 +53,20 @@ export const ChatProvider = (props) => {
     });
   };
 
+  const handleMessages = (data) => {
+    setMessages(data);
+  };
+
+  const handleMessagesUpdate = (data) => {
+    setMessages((messages) => [...messages, data]);
+  };
+
   const socket = useSocket({
     handleConversation,
     handleConversations,
     handleConversationsUpdate,
+    handleMessages,
+    handleMessagesUpdate,
   });
 
   const startConversation = (id, email) => {
@@ -50,21 +74,18 @@ export const ChatProvider = (props) => {
   };
 
   const sendMessage = (message) => {
-    socket.sendMessage(message);
-    setMessages([...messages, { message }]);
+    if (conversation._id)
+      socket.sendMessage({ conversationId: conversation._id, message });
+
+    setMessages([...messages, { message, sentBy: user.id }]);
   };
 
   useEffect(() => {
-    if (authenticated && !socket.connected) {
-      socket.connect();
-    }
+    if (authenticated && !socket.connected) socket.connect();
   }, [authenticated]);
 
   const state = { messages, conversation, conversations };
-  const dispatch = {
-    startConversation,
-    sendMessage,
-  };
+  const dispatch = { startConversation, sendMessage };
 
   return (
     <ChatStateContext.Provider value={state}>

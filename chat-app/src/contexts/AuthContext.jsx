@@ -26,7 +26,7 @@ export const AuthProvider = (props) => {
         console.log(error);
         setAuthenticating(false);
       });
-  }, []);
+  }, [authenticated]);
 
   const register = async (data) => {
     const { email, password } = data;
