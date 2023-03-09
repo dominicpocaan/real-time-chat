@@ -30,9 +30,6 @@ const messageHandler = (io, socket) => {
       }
 
       socket.broadcast.to(socket.currentRoom).emit('message:new', message);
-    } else {
-      // Get conversation ID from data,
-      // then validate if user have conversation access.
     }
   };
 
